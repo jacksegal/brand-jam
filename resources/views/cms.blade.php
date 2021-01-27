@@ -117,6 +117,7 @@
                                     <li>Font size</li>
                                     <li>Font colour</li>
                                 </ul>
+                                <p>(apply settings to all images)</p>
                             </div>
                             <!-- Text Image Preview -->
                             <div class="col">
