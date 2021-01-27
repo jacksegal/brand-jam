@@ -49,6 +49,23 @@
                     <div style="margin-top: 25px;">
                         <h1>Background</h1>
                         <p>Single or Multiple?</p>
+                        <div class="row">
+                            <!-- Background Settings -->
+                            <div class="col">
+                                <p>Background aspect ratio:</p>
+                                <ul>
+                                    <li>1.91:1</li>
+                                    <li>1:1</li>
+                                    <li>4:5</li>
+                                    <li>9:16</li>
+                                </ul>
+                            </div>
+
+                            <!-- Background Preview -->
+                            <div class="col">
+                                <img width="400" height="300" src="https://placekitten.com/400/300">
+                            </div>
+                        </div>
                         <p>Upload your images below:</p>
                         <div class="d-flex flex-wrap">
                             <div class="p-3">
