@@ -15,9 +15,9 @@
     </style>
 </head>
 <body>
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-md-3 bg-dark text-white">
+<div class="container-fluid">
+    <div class="row vh-100">
+        <div class="col-md-3 bg-dark text-white pt-5">
             <ul>
                 <li>General</li>
                 <li>Design</li>
@@ -27,7 +27,7 @@
             </ul>
         </div>
 
-        <div class="col-md-9 border">
+        <div class="col-md-9 border pt-5">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <a class="nav-link active" id="background-tab" data-toggle="tab" href="#background" role="tab" aria-controls="background" aria-selected="true">Background</a>
