@@ -91,6 +91,7 @@
             <p class="main-text">Pitchfork unicorn PBR&B marfa mustache YOLO. Shabby chic vexillologist chambray, woke mlkshk fingerstache roof party pinterest.</p>
         </div>
 
+
         {{-- Share --}}
         <div x-show="step === 'share'" x-cloak>
             <h1 class="heading">SHARE THIS TOOL:</h1>

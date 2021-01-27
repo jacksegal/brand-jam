@@ -39,6 +39,10 @@ Route::get('/dev', function () {
     return view('dev');
 });
 
+Route::get('/cms', function () {
+    return view('cms');
+});
+
 Route::post('/download', function(Request $request) {
 
     $img = $request->input('image');
