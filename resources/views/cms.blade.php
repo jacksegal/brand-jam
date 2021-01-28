@@ -127,18 +127,45 @@
                         <div class="row">
                             <!-- Text Settings -->
                             <div class="col">
-                                <p>Text settings:</p>
-                                <ul>
-                                    <li>Default text</li>
-                                    <li>Font family</li>
-                                    <li>Font size</li>
-                                    <li>Font colour</li>
-                                </ul>
-                                <p>(apply settings to all images)</p>
+                                <!-- Default Text -->
+                                <div class="mb-3">
+                                    <label for="defaultText" class="form-label">Default text</label>
+                                    <textarea class="form-control" id="defaultText" rows="3">This is a really important message!&#13;&#10;&#13;&#10;Jack</textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="fontFamily" class="form-label">Font Family</label>
+                                    <select class="custom-select" id="fontFamily">
+                                        <option value="1">Arial</option>
+                                        <option value="2">Times New Roman</option>
+                                        <option value="3">Lato</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="fontSize" class="form-label">Font Size</label>
+                                    <input value="22" type="number" class="form-control" id="fontSize">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="fontColour" class="form-label">Font Colour</label>
+                                    <select class="custom-select" id="fontColour">
+                                        <option value="black" selected>Black</option>
+                                        <option value="red">Red</option>
+                                        <option value="yellow">Yellow</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-5">
+                                    <button type="button" class="btn btn-primary">Apply settings to all images</button>
+                                </div>
+
+
                             </div>
                             <!-- Text Image Preview -->
                             <div class="col">
-                                <img width="400" height="300" src="https://placekitten.com/400/300">
+                                <div id="brand-canvas-container">
+                                    <canvas width="400" height="300" style="border: solid 1px black;" id="text-canvas"></canvas>
+                                </div>
+{{--                                <img width="400" height="300" src="https://placekitten.com/400/300">--}}
                             </div>
                         </div>
                         <div class="row">
@@ -146,13 +173,13 @@
                                 <p>Select your image below:</p>
                                 <div class="d-flex flex-wrap">
                                     <div class="p-3">
-                                        <img width="200" height="150" src="https://placekitten.com/400/300">
+                                        <img width="200" height="150" src="/img/background-1.jpg">
                                     </div>
                                     <div class="p-3">
-                                        <img width="200" height="150" src="https://placekitten.com/400/300">
+                                        <img width="200" height="150" src="/img/background-2.jpg">
                                     </div>
                                     <div class="p-3">
-                                        <img width="200" height="150" src="https://placekitten.com/400/300">
+                                        <img width="200" height="150" src="/img/background-3.jpg">
                                     </div>
                                 </div>
                             </div>
@@ -200,5 +227,71 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.2.0/fabric.min.js" integrity="sha512-Pdu3zoEng2TLwwjnDne3O7zaeWZfEJHU5B63T+zLtME/wg1zfeSH/1wrtOzOC37u2Y1Ki8pTCdKsnbueOlFlMg==" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 
+<!-- Text tab -->
+<script>
+
+    const defaultTextElement = document.querySelector('#defaultText');
+    const fontSizeElement = document.querySelector('#fontSize');
+    const fontColourElement = document.querySelector('#fontColour');
+
+
+    // Init Canvas
+    var canvas = new fabric.Canvas('text-canvas', {
+        allowTouchScrolling: true,
+        enableRetinaScaling: false,
+        // selection: false,
+        controlsAboveOverlay: true
+    });
+
+    // Background Image
+    var center = canvas.getCenter();
+    fabric.Image.fromURL('/img/background-3.jpg', function(img){
+        canvas.setBackgroundColor('black');
+        img.scaleToWidth(canvas.width);
+        //img.scaleToHeight(canvas.height);
+        canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
+            top: center.top,
+            left: center.left,
+            originX: 'center',
+            originY: 'center'
+        });
+        canvas.requestRenderAll();
+    });
+
+    var text = new fabric.Textbox(defaultTextElement.value, {
+        left: 120,
+        top: 90,
+        fontSize: fontSizeElement.value,
+        width: 250,
+        fill: fontColourElement.value,
+        editable: false
+    });
+    text.setControlsVisibility({
+        mt: false, // middle top disable
+        mb: false, // midle bottom
+        tl: false,
+        tr: false,
+        bl: false,
+        br: false,
+        // ml: false, // middle left
+        // mr: false, // I think you get it
+    });
+    canvas.add(text);
+
+    defaultTextElement.addEventListener('input', (event) => {
+        text.set('text', event.target.value);
+        canvas.renderAll();
+    });
+
+    fontSizeElement.addEventListener('input', (event) => {
+        text.set('fontSize', event.target.value);
+        canvas.renderAll();
+    });
+
+    fontColourElement.addEventListener('input', (event) => {
+        text.set('fill', event.target.value);
+        canvas.renderAll();
+    });
+</script>
 </body>
 </html>

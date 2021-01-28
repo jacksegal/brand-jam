@@ -185,10 +185,6 @@
             });
             canvas.requestRenderAll();
         });
-
-
-
-
     </script>
 
     <script>
