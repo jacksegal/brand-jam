@@ -266,6 +266,7 @@
         fill: fontColourElement.value,
         editable: false
     });
+    //
     text.setControlsVisibility({
         mt: false, // middle top disable
         mb: false, // midle bottom
