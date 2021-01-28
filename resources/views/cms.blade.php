@@ -52,33 +52,39 @@
                         <div class="row">
                             <!-- Background Settings -->
                             <div class="col">
-                                <p>Background aspect ratio:</p>
-                                <ul>
-                                    <li>1.91:1</li>
-                                    <li>1:1</li>
-                                    <li>4:5</li>
-                                    <li>9:16</li>
-                                </ul>
+                                <div class="mb-3">
+                                    <label for="aspectRatio" class="form-label">Aspect ratio</label>
+                                    <select class="custom-select" id="aspectRatio">
+                                        <option data-width="1.91" data-height="1" selected>1.91:1</option>
+                                        <option data-width="1" data-height="1">1:1</option>
+                                        <option data-width="4" data-height="5">4:5</option>
+                                        <option data-width="9" data-height="16">9:16</option>
+                                    </select>
+                                </div>
+                                <button type="button" class="btn btn-primary">Apply settings to all Backgrounds</button>
                             </div>
 
                             <!-- Background Preview -->
                             <div class="col">
-                                <img width="400" height="300" src="https://placekitten.com/400/300">
+                                <div id="image-canvas-container">
+                                    <canvas width="400" height="209" style="border: solid 1px black;" id="image-canvas"></canvas>
+                                </div>
                             </div>
                         </div>
+
                         <p>Upload your images below:</p>
                         <div class="d-flex flex-wrap">
                             <div class="p-3">
                                 <p class="text-right">Delete Image</p>
-                                <img width="200" height="150" src="https://placekitten.com/400/300">
+                                <img width="200" height="auto" src="/img/background-1.jpg">
                             </div>
                             <div class="p-3">
                                 <p class="text-right">Delete Image</p>
-                                <img width="200" height="150" src="https://placekitten.com/400/300">
+                                <img width="200" height="auto" src="/img/background-2.jpg">
                             </div>
                             <div class="p-3">
                                 <p class="text-right">Delete Image</p>
-                                <img width="200" height="150" src="https://placekitten.com/400/300">
+                                <img width="200" height="auto" src="/img/background-3.jpg">
                             </div>
                         </div>
                         <p>Default content:</p>
@@ -99,15 +105,15 @@
                         <div class="d-flex">
                             <div class="p-3">
                                 <p class="text-right">Delete Image</p>
-                                <img src="https://placekitten.com/100/300">
+                                <img width="50" height="auto" src="/img/object-1.png">
                             </div>
                             <div class="p-3">
                                 <p class="text-right">Delete Image</p>
-                                <img src="https://placekitten.com/100/300">
+                                <img width="50" height="auto"  src="/img/object-2.png">
                             </div>
                             <div class="p-3">
                                 <p class="text-right">Delete Image</p>
-                                <img src="https://placekitten.com/100/300">
+                                <img width="50" height="auto"  src="/img/object-3.png">
                             </div>
                         </div>
                         <p>Default content:</p>
@@ -162,7 +168,7 @@
                             </div>
                             <!-- Text Image Preview -->
                             <div class="col">
-                                <div id="brand-canvas-container">
+                                <div id="text-canvas-container">
                                     <canvas width="400" height="300" style="border: solid 1px black;" id="text-canvas"></canvas>
                                 </div>
 {{--                                <img width="400" height="300" src="https://placekitten.com/400/300">--}}
@@ -292,6 +298,56 @@
     fontColourElement.addEventListener('input', (event) => {
         text.set('fill', event.target.value);
         canvas.renderAll();
+    });
+
+
+
+    // IMAGE CANVAS
+    const aspectRatioElement = document.querySelector('#aspectRatio');
+
+    var imageCanvas = new fabric.Canvas('image-canvas', {
+        allowTouchScrolling: true,
+        enableRetinaScaling: false,
+        // selection: false,
+        controlsAboveOverlay: true
+    });
+
+    // Background Image
+    applyBackgroundImage();
+
+    function applyBackgroundImage() {
+        var imageCenter = imageCanvas.getCenter();
+        fabric.Image.fromURL('/img/background-3.jpg', function(img){
+            imageCanvas.setBackgroundColor('black');
+            console.log('imageCanvas.width = '+imageCanvas.width);
+            console.log('imageCanvas.height = '+imageCanvas.height);
+            console.log();
+            if(imageCanvas.width > imageCanvas.height) {
+                console.log('landscape: scaleToHeight');
+                img.scaleToHeight(imageCanvas.height);
+            } else {
+                console.log('portrait: scaleToWidth');
+                img.scaleToWidth(imageCanvas.width);
+            }
+            imageCanvas.setBackgroundImage(img, imageCanvas.renderAll.bind(imageCanvas), {
+                top: imageCenter.top,
+                left: imageCenter.left,
+                originX: 'center',
+                originY: 'center'
+            });
+            imageCanvas.requestRenderAll();
+        });
+    }
+
+    aspectRatioElement.addEventListener('input', (event) => {
+        var option = event.target.options[event.target.selectedIndex];
+        var height = option.getAttribute('data-height') / option.getAttribute('data-width');
+
+        // var imageCanvasWidth = document.getElementById("image-canvas-container").offsetWidth;
+        imageCanvas.setWidth(400);
+        imageCanvas.setHeight(400* height);
+        applyBackgroundImage();
+
     });
 </script>
 </body>
