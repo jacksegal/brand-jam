@@ -233,6 +233,10 @@
                     fabric.Image.fromURL(link, function(oImg) {
                         oImg.scaleToWidth(200);
                         oImg.scaleToHeight(200);
+                        oImg.top = center.top;
+                        oImg.left = center.left;
+                        oImg.originX = 'center';
+                        oImg.originY = 'center';
                         canvas.add(oImg);
                     });
                 },
