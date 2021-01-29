@@ -77,6 +77,7 @@
         <div x-show="step === 'text'" x-cloak>
             <h1 class="heading">ADD YOUR TEXT</h1>
             <p class="main-text">Portland keytar mustache, leggings asymmetrical normcore gluten-free synth single-origin coffee tofu tacos jianbing.</p>
+            <textarea class="mb-2 form-control" id="defaultText" rows="3">This is a really important message!</textarea>
         </div>
 
         {{-- Download --}}
@@ -163,6 +164,13 @@
 
 @section('scripts')
     <script>
+        const defaultTextElement = document.querySelector('#defaultText');
+
+        defaultTextElement.addEventListener('input', (event) => {
+            text.set('text', event.target.value);
+            canvas.renderAll();
+        });
+
         // Init Canvas
         var canvas = new fabric.Canvas('c', {
             allowTouchScrolling: true,
@@ -237,11 +245,22 @@
                     this.pushState('text');
                     if(!this.textAdded) {
                         // Add Text
-                        var text = new fabric.Textbox("I'm baby normcore wayfarers poutine typewriter kickstarter", {
+                         text = new fabric.Textbox(defaultTextElement.value, {
                             left: 120,
-                            top: 90,
+                            top: 200,
                             fontSize: 20,
-                            width: 250
+                            width: 250,
+                            editable: false,
+                        });
+
+                        text.setControlsVisibility({
+                            mt: false, // middle top disable
+                            mb: false, // midle bottom
+                            // tl: false,
+                            // tr: false,
+                            // bl: false,
+                            // br: false,
+
                         });
                         canvas.add(text);
                         this.textAdded = true;
@@ -290,5 +309,6 @@
                 }
             }
         }
+
     </script>
 @endsection
