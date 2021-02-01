@@ -237,6 +237,17 @@
                         oImg.left = center.left;
                         oImg.originX = 'center';
                         oImg.originY = 'center';
+                        oImg.setControlsVisibility({
+                            mt: false, // middle top disable
+                            mb: false, // midle bottom
+                            ml: false, // midle bottom
+                            mr: false, // midle bottom
+                            // tl: false,
+                            // tr: false,
+                            // bl: false,
+                            // br: false,
+
+                        });
                         canvas.add(oImg);
                     });
                 },
